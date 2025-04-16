@@ -26,11 +26,11 @@ Desenvolver as funcionalidades conforme requisitos
 
 ## Tecnologias
 
--Node.JS (FRAMEWORK)
--VsCode (IDE)
--Prisma (ORM)
--Insomnia (TESTES)
--Xampp (SGBD)
+- Node.JS (FRAMEWORK)
+- VsCode (IDE)
+- Prisma (ORM)
+- Insomnia (TESTES)
+- Xampp (SGBD)
 ## Passo a Passo de como executar a API
 
 - 1 Clone este repositório
