@@ -2,6 +2,8 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const create = async (req, res) => {
+    const dados = req.body;
+    dados.subTotal = dados.qtd * dados.preco; 
     try {
         const pedido = await prisma.pedido.create({
             data: req.body
@@ -23,18 +25,14 @@ const read = async (req, res) => {
 const readOne = async (req, res) => {
     try {
         const pedido = await prisma.pedido.findUnique({
-            select: {
-                id: true,
-                data: true,
-                produto: true,
-                qtd: true,
-                preco: true,
-                subTotal: true,
-            },
             where: {
                 id: Number(req.params.id)
+            },
+
+            include: {
+                cliente: true
             }
-        });
+            });
         return res.json(pedido);
     } catch (error) {
         return res.status(400).json({ error: error.message });

@@ -11,6 +11,7 @@ router.get('/',(req, res)=>{
 
 router.post('/clientes',Cliente.create);
 router.get('/clientes',Cliente.read);
+router.get('/clientes/:id', Cliente.readOne);
 router.patch('/clientes/:id',Cliente.update);
 router.delete('/clientes/:id',Cliente.remove);
 

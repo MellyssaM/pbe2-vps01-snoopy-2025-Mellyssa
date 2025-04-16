@@ -33,32 +33,17 @@ const update = async (req, res) => {
 
 const readOne = async (req, res) => {
     try {
-        const cliente = await prisma.cliente.findUnique({
-            select: {
-                id: true,
-                nome: true,
-                cpf: true,
-                telefones: {
-                    select: {
-                        id: true,
-                        numero: true,
-                        tipo: true,
-                    }
-                },
-                pedidos: {
-                    select: {
-                        id: true,
-                        data: true,
-                        valor: true,
-                    }
-                },
-            },
+        const clientes = await prisma.cliente.findUnique({
             where: {
                 id: Number(req.params.id)
+            },
+            include:{
+                telefones: true,
+                pedidos: true  
             }
         });
 
-    return res.json(cliente);
+    return res.json(clientes);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
