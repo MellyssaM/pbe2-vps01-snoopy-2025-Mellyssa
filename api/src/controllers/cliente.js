@@ -17,25 +17,6 @@ const read = async (req, res) => {
     res.json(clientes);
 }
 
-const readOne = async (req, res) => {
-    try {
-        const clientes = await prisma.cliente.findUnique({
-            select: {
-                id: true,
-                cpf: true,
-                nome: true,
-                telefones: true
-            },
-            where: {
-                id: Number(req.params.id)
-            }
-        });
-        return res.json(clientes);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-}
-
 const update = async (req, res) => {
     try {
         const cliente = await prisma.cliente.update({
@@ -47,6 +28,39 @@ const update = async (req, res) => {
         res.status(202).json(cliente).end();
     } catch (e) {
         res.status(400).json(e).end();
+    }
+}
+
+const readOne = async (req, res) => {
+    try {
+        const cliente = await prisma.cliente.findUnique({
+            select: {
+                id: true,
+                nome: true,
+                cpf: true,
+                telefones: {
+                    select: {
+                        id: true,
+                        numero: true,
+                        tipo: true,
+                    }
+                },
+                pedidos: {
+                    select: {
+                        id: true,
+                        data: true,
+                        valor: true,
+                    }
+                },
+            },
+            where: {
+                id: Number(req.params.id)
+            }
+        });
+
+    return res.json(cliente);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
     }
 }
 
@@ -66,7 +80,7 @@ const remove = async (req, res) => {
 module.exports = {
     create,
     read,
-    readOne,
     update,
+    readOne,
     remove
 }

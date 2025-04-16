@@ -30,17 +30,6 @@ const readOne = async (req, res) => {
                 qtd: true,
                 preco: true,
                 subTotal: true,
-                possui: {
-                    select: {
-                        nome: true
-                    }
-                },
-                leciona: {
-                    select: {
-                        nome: true
-                    }
-                },
-                matriculas: true
             },
             where: {
                 id: Number(req.params.id)
